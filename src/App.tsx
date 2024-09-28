@@ -3,7 +3,6 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import SideNav from "./components/SideNav";
 import Hero from "./components/Hero";
 import About from "./components/About";
-import Skills from "./components/Skills";
 import Resume from "./components/Resume";
 import Contact from "./components/Contact";
 
@@ -15,7 +14,6 @@ function App() {
       <main className="main">
         <Hero />
         <About />
-        {/* <Skills /> */}
         <Resume />
         <Contact />
       </main>

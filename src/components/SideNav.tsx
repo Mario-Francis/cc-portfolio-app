@@ -1,10 +1,13 @@
-import { useEffect, useState } from "react";
 import profileImage from "../assets/img/profile_img.jpeg";
 import { Link } from "react-scroll";
 
 const SideNav = () => {
-  const [activeSection, setActiveSection] = useState("");
-
+  const linkOptions = {
+    spy: true,
+    smooth: true,
+    duration: 500,
+    offset: -150,
+  };
   return (
     <header id="header" className="header dark-background d-flex flex-column">
       <i className="header-toggle d-xl-none bi bi-list"></i>
@@ -17,7 +20,6 @@ const SideNav = () => {
         href="index.html"
         className="logo d-flex align-items-center justify-content-center"
       >
-        {/* <img src="assets/img/logo.png" alt=""> */}
         <h1 className="sitename">Mario Ezeobele</h1>
       </a>
 
@@ -65,10 +67,7 @@ const SideNav = () => {
             <Link
               href="#hero"
               to="hero"
-              spy={true}
-              smooth={true}
-              duration={500}
-              activeClass={activeSection === "hero" ? "active" : ""}
+              {...linkOptions}
             >
               <i className="bi bi-house navicon"></i>Home
             </Link>
@@ -77,10 +76,7 @@ const SideNav = () => {
             <Link
               href="#about"
               to="about"
-              spy={true}
-              smooth={true}
-              duration={500}
-              activeClass={activeSection === "about" ? "active" : ""}
+              {...linkOptions}
             >
               <i className="bi bi-person navicon"></i> About
             </Link>
@@ -89,10 +85,7 @@ const SideNav = () => {
             <Link
               href="#resume"
               to="resume"
-              spy={true}
-              smooth={true}
-              duration={500}
-              activeClass={activeSection === "resume" ? "active" : ""}
+              {...linkOptions}
             >
               <i className="bi bi-file-earmark-text navicon"></i> Resume
             </Link>
@@ -101,10 +94,7 @@ const SideNav = () => {
             <Link
               href="#contact"
               to="contact"
-              spy={true}
-              smooth={true}
-              duration={500}
-              activeClass={activeSection === "contact" ? "active" : ""}
+              {...linkOptions}
             >
               <i className="bi bi-envelope navicon"></i> Contact
             </Link>

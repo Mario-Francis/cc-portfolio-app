@@ -1,4 +1,5 @@
 import profileImage from "../assets/img/profile_img.jpeg";
+import Skills from "./Skills";
 
 const About = () => {
   return (
@@ -71,8 +72,8 @@ const About = () => {
               With extensive experience in both frontend and backend
               development, I specialize in building scalable, secure web
               applications that meet the needs of modern businesses. I leverage
-              my expertise in .NET, C#, React, Angular, and cloud technologies to
-              create applications that enhance business productivity and user
+              my expertise in .NET, C#, React, Angular, and cloud technologies
+              to create applications that enhance business productivity and user
               engagement. Always looking for new challenges and collaborations,
               I am dedicated to staying at the forefront of web development
               trends and best practices.
@@ -80,6 +81,7 @@ const About = () => {
           </div>
         </div>
       </div>
+      <Skills />
     </section>
   );
 };
