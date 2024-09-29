@@ -1,4 +1,38 @@
+import { FormEvent, useState } from "react";
+import Mail from "../types/Mail";
+import { sendMail } from "../services/MailService";
+
 const Contact = () => {
+  const [formData, setFormData] = useState<Mail>({
+    subject: "",
+    email: "",
+    message: "",
+    name: "",
+    phone: "",
+  });
+
+  const [showSuccessMessage, setShowSuccessMessage] = useState<boolean>(false);
+  const mutation = sendMail();
+
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    mutation.mutate(formData, {
+      onSuccess: () => {
+        setFormData({
+          subject: "",
+          email: "",
+          message: "",
+          name: "",
+          phone: "",
+        });
+        setShowSuccessMessage((_) => true);
+        setTimeout(() => {
+          setShowSuccessMessage(false);
+        }, 10000);
+      },
+    });
+  };
+
   return (
     <section id="contact" className="contact section">
       <div className="container section-title" data-aos="fade-up">
@@ -65,73 +99,112 @@ const Contact = () => {
 
           <div className="col-lg-7">
             <form
-              action="forms/contact.php"
               method="post"
               className="php-email-form"
               data-aos="fade-up"
               data-aos-delay="200"
+              onSubmit={onSubmit}
             >
               <div className="row gy-4">
                 <div className="col-md-6">
-                  <label htmlFor="name-field" className="pb-2">
-                    Your Name
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    id="name-field"
-                    className="form-control"
-                    required
-                  />
-                </div>
-
-                <div className="col-md-6">
-                  <label htmlFor="email-field" className="pb-2">
-                    Your Email
-                  </label>
-                  <input
-                    type="email"
-                    className="form-control"
-                    name="email"
-                    id="email-field"
-                    required
-                  />
-                </div>
-
-                <div className="col-md-12">
-                  <label htmlFor="subject-field" className="pb-2">
-                    Subject
+                  <label htmlFor="subject" className="pb-2">
+                    <span className="text-danger">*</span> Message Title
+                    (Subject)
                   </label>
                   <input
                     type="text"
                     className="form-control"
                     name="subject"
-                    id="subject-field"
+                    id="subject"
+                    value={formData?.subject}
+                    onChange={(e) => {
+                      setFormData({ ...formData, subject: e.target.value });
+                    }}
+                    required
+                  />
+                </div>
+                <div className="col-md-6">
+                  <label htmlFor="email" className="pb-2">
+                    <span className="text-danger">*</span> Email Address
+                  </label>
+                  <input
+                    type="email"
+                    className="form-control"
+                    name="email"
+                    id="email"
+                    value={formData?.email}
+                    onChange={(e) => {
+                      setFormData({ ...formData, email: e.target.value });
+                    }}
+                    required
+                  />
+                </div>
+                <div className="col-md-6">
+                  <label htmlFor="name" className="pb-2">
+                    <span className="text-danger">*</span> Full Name
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    className="form-control"
+                    value={formData?.name}
+                    onChange={(e) => {
+                      setFormData({ ...formData, name: e.target.value });
+                    }}
                     required
                   />
                 </div>
 
+                <div className="col-md-6">
+                  <label htmlFor="phone" className="pb-2">
+                    Phone Number
+                  </label>
+                  <input
+                    type="tel"
+                    className="form-control"
+                    name="phone"
+                    id="phone"
+                    value={formData?.phone}
+                    onChange={(e) => {
+                      setFormData({ ...formData, phone: e.target.value });
+                    }}
+                  />
+                </div>
+
                 <div className="col-md-12">
-                  <label htmlFor="message-field" className="pb-2">
-                    Message
+                  <label htmlFor="message" className="pb-2">
+                    <span className="text-danger">*</span> Message
                   </label>
                   <textarea
                     className="form-control"
                     name="message"
                     rows={10}
-                    id="message-field"
+                    id="message"
+                    value={formData?.message}
+                    onChange={(e) => {
+                      setFormData({ ...formData, message: e.target.value });
+                    }}
                     required
                   ></textarea>
                 </div>
 
                 <div className="col-md-12 text-center">
-                  <div className="loading">Loading</div>
-                  <div className="error-message"></div>
-                  <div className="sent-message">
-                    Your message has been sent. Thank you!
-                  </div>
+                  {mutation.isPending && <div className="loading">Loading</div>}
+                  {mutation.isError && (
+                    <div className="error-message">
+                      {mutation.error.message}
+                    </div>
+                  )}
+                  {showSuccessMessage && mutation.isSuccess && (
+                    <div className="sent-message">
+                      Your message has been sent. Thank you!
+                    </div>
+                  )}
 
-                  <button type="submit">Send Message</button>
+                  <button type="submit">
+                    <i className="bi bi-send"></i> Send Message
+                  </button>
                 </div>
               </div>
             </form>

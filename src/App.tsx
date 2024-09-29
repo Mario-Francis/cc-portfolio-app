@@ -5,8 +5,16 @@ import Hero from "./components/Hero";
 import About from "./components/About";
 import Resume from "./components/Resume";
 import Contact from "./components/Contact";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 
 function App() {
+  const _queryClient = new QueryClient();
+  const [isPageLoading, setIsPageLoading] = useState<boolean>(true);
+  useEffect(() => {
+    setIsPageLoading(false);
+  }, []);
+
   return (
     <>
       <SideNav />
@@ -15,7 +23,9 @@ function App() {
         <Hero />
         <About />
         <Resume />
-        <Contact />
+        <QueryClientProvider client={_queryClient}>
+          <Contact />
+        </QueryClientProvider>
       </main>
 
       <footer id="footer" className="footer position-relative light-background">
@@ -41,7 +51,7 @@ function App() {
         <i className="bi bi-arrow-up-short"></i>
       </a>
 
-      {/* <div id="preloader"></div> */}
+      {isPageLoading && <div id="preloader"></div>}
     </>
   );
 }

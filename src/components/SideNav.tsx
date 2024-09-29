@@ -1,3 +1,4 @@
+import { useState } from "react";
 import profileImage from "../assets/img/profile_img.jpeg";
 import { Link } from "react-scroll";
 
@@ -8,9 +9,18 @@ const SideNav = () => {
     duration: 500,
     offset: -150,
   };
+  const [showNav, setShowNav] = useState(false);
+
   return (
-    <header id="header" className="header dark-background d-flex flex-column">
-      <i className="header-toggle d-xl-none bi bi-list"></i>
+    <header
+      id="header"
+      className={
+        "header dark-background d-flex flex-column " + (showNav
+          ? "header-show"
+          : "")
+      }
+    >
+      <i className={"header-toggle d-xl-none bi " + (showNav?"bi-x":"bi-list")} onClick={()=> setShowNav(!showNav)}></i>
 
       <div className="profile-img">
         <img src={profileImage} alt="" className="img-fluid rounded-circle" />
@@ -64,38 +74,22 @@ const SideNav = () => {
       <nav id="navmenu" className="navmenu">
         <ul>
           <li>
-            <Link
-              href="#hero"
-              to="hero"
-              {...linkOptions}
-            >
+            <Link href="#hero" to="hero" {...linkOptions}>
               <i className="bi bi-house navicon"></i>Home
             </Link>
           </li>
           <li>
-            <Link
-              href="#about"
-              to="about"
-              {...linkOptions}
-            >
+            <Link href="#about" to="about" {...linkOptions}>
               <i className="bi bi-person navicon"></i> About
             </Link>
           </li>
           <li>
-            <Link
-              href="#resume"
-              to="resume"
-              {...linkOptions}
-            >
+            <Link href="#resume" to="resume" {...linkOptions}>
               <i className="bi bi-file-earmark-text navicon"></i> Resume
             </Link>
           </li>
           <li>
-            <Link
-              href="#contact"
-              to="contact"
-              {...linkOptions}
-            >
+            <Link href="#contact" to="contact" {...linkOptions}>
               <i className="bi bi-envelope navicon"></i> Contact
             </Link>
           </li>
